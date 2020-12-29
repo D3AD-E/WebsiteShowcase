@@ -18,7 +18,6 @@ namespace Website.Controllers
             _userManager = userManager;
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
-
         public IActionResult Create() => View();
         [HttpPost]
         public async Task<IActionResult> Create(string name)
