@@ -23,7 +23,12 @@ namespace Website.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult ContactMe()
+        {
+            return View();
+        }
+
+        public IActionResult Cv()
         {
             return View();
         }
