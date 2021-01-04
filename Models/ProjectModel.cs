@@ -13,5 +13,6 @@ namespace Website.Models
         public string Description { get; set; }
         public string LanguageTag { get; set; }
         public string ImageLink { get; set; }
+        public string GithubLink { get; set; }
     }
 }

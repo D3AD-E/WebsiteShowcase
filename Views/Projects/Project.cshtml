@@ -1,0 +1,47 @@
+﻿@model Website.Models.ProjectModel
+
+@{
+    ViewData["Title"] = "Project";
+    var link = string.Empty;
+    if (Model.ImageLink != string.Empty)
+    {
+        link = "/assets/img/projects/" + Model.ImageLink;
+    }
+}
+
+<main class="page project-page">
+    <section class="portfolio-block project">
+        <div class="container">
+            <div class="heading">
+                <h2>@Html.DisplayFor(model => model.Name)</h2>
+            </div>
+            <div class="image" style="background-image:url(@link);"></div>
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-1 info">
+                    <h3>Description</h3>
+                    <p>@Html.DisplayFor(model => model.Description)</p>
+                </div>
+                <div class="col-12 col-md-3 offset-md-1 meta">
+                    <div class="tags"><span class="meta-heading">Tags</span><a href="#">@Html.DisplayFor(model => model.LanguageTag)</a></div>
+                </div>
+            </div>
+            <div class="more-projects">
+                <h3 class="text-center">More Projects</h3>
+                <div class="row gallery">
+                    <div class="col-md-4 col-lg-3">
+                        <div class="item"><a href="#"><img class="img-fluid scale-on-hover" src="assets/img/nature/image2.jpg"></a></div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="item"><a href="#"><img class="img-fluid scale-on-hover" src="assets/img/nature/image3.jpg"></a></div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="item"><a href="#"><img class="img-fluid scale-on-hover" src="assets/img/tech/image4.jpg"></a></div>
+                    </div>
+                    <div class="col-md-4 col-lg-3">
+                        <div class="item"><a href="#"><img class="img-fluid scale-on-hover" src="assets/img/nature/image5.jpg"></a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

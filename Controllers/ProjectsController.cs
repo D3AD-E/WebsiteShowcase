@@ -19,16 +19,42 @@ namespace Website.Controllers
             _context = context;
         }
 
-        public IActionResult All() => View();
+        public async Task<IActionResult> All()
+        {
+            var projectModels = await _context.ProjectModel.ToListAsync();
+            if (projectModels == null)
+            {
+                return NotFound();
+            }
+
+            return View(projectModels);
+        }
         public IActionResult Featured() => View();
 
-        // GET: ProjectModels
+        // GET: Projects
         public async Task<IActionResult> Index()
         {
             return View(await _context.ProjectModel.ToListAsync());
         }
 
-        // GET: ProjectModels/Details/5
+        public async Task<IActionResult> Project(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var projectModel = await _context.ProjectModel
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (projectModel == null)
+            {
+                return NotFound();
+            }
+
+            return View(projectModel);
+        }
+
+        // GET: Projects/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -46,18 +72,18 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: ProjectModels/Create
+        // GET: Projects/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: ProjectModels/Create
+        // POST: Projects/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,DescriptionShort,Description,LanguageTag,ImageLink")] ProjectModel projectModel)
+        public async Task<IActionResult> Create([Bind("Id,Name,DescriptionShort,Description,LanguageTag,ImageLink,GithubLink")] ProjectModel projectModel)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +94,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: ProjectModels/Edit/5
+        // GET: Projects/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -84,12 +110,12 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // POST: ProjectModels/Edit/5
+        // POST: Projects/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DescriptionShort,Description,LanguageTag,ImageLink")] ProjectModel projectModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DescriptionShort,Description,LanguageTag,ImageLink,GithubLink")] ProjectModel projectModel)
         {
             if (id != projectModel.Id)
             {
@@ -119,7 +145,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: ProjectModels/Delete/5
+        // GET: Projects/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -137,7 +163,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // POST: ProjectModels/Delete/5
+        // POST: Projects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

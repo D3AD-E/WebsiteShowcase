@@ -1,129 +1,22 @@
-﻿<main class="page projets-page">
+﻿@model List<ProjectModel>
+
+<main class="page projets-page">
     <section class="portfolio-block project-no-images">
         <div class="container">
             <div class="heading">
                 <h2>All &nbsp;projects</h2>
             </div>
             <div class="row">
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Texas Holdem<br></strong></h3>
-                        <h4>Play Texas Holdem with your friends online, uses LAN connection.<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
+                @foreach (var project in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3><strong>@project.Name<br></strong></h3>
+                            <h4>@project.DescriptionShort<br></h4><a class="btn btn-outline-primary btn-sm" role="button" asp-controller="Projects" asp-action="Project" asp-route-id=@project.Id>See More</a>
+                            <div class="tags"><a href="#">@project.LanguageTag</a></div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>CV website<br></strong></h3>
-                        <h4>You are seeing it now.<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">ASP.NET CORE</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Hex editor<br></strong></h3>
-                        <h4>Classical hex editor with a few additions for debugging. Compatible with OllyDbg.<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Tic Tac Toe Bot</strong><br></h3>
-                        <h4>Play Tic Tac Toe in your Discord guild. Try to beat your friends winstreak!<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Screen Scraper</strong><br></h3>
-                        <h4>Gets info from screen, useful for bot creators, quick export of pixel info (color, position).<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Shopping website</strong><br></h3>
-                        <h4>Small shopping website<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">nodejs</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Formula solver</strong><br></h3>
-                        <h4>Solves formulas with constans via WolframAlfa Api<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>AutoFisher</strong><br></h3>
-                        <h4>Bot for Pixel Worlds, based on tutorial from wh0am15533<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Farming simulator</strong><br></h3>
-                        <h4>Game/Simulation/Database of a farm<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C++</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Invaders</strong><br></h3>
-                        <h4>Old game remade using SFML<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C++</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Penguins</strong><br></h3>
-                        <h4>Game made as an university project<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>IDA to DBG</strong><br></h3>
-                        <h4>Converts offset of function in IDA to OllyDbg<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">Python</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Image Cropper</strong><br></h3>
-                        <h4>Removes invisible pixels from pictures to fit Telegram sticker requirements<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">Python</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Linked list implementation</strong><br></h3>
-                        <h4>University project<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C++</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>AVL tree implementation</strong><br></h3>
-                        <h4>University project<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C++</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Double-linked ring implementation</strong><br></h3>
-                        <h4>University project<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C++</a></div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="project-card-no-image">
-                        <h3><strong>Fitness Helper</strong></h3>
-                        <h4>Create a new workout routine or use a premade one. Helps with timing your exercises.<br></h4><a class="btn btn-outline-primary btn-sm" role="button" href="#">See More</a>
-                        <div class="tags"><a href="#">C#</a></div>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     </section>
