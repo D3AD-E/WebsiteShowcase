@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Website.Core;
 using Website.Data;
 using Website.Models;
 
@@ -35,6 +36,48 @@ namespace Website.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _context.ProjectModel.ToListAsync());
+        }
+
+        public async Task<RedirectToActionResult> GitGet()
+        {
+            GitSync gitSync = new GitSync();
+            var projects = await gitSync.GetProjects();
+
+            foreach (var project in projects)
+            {
+                if(!_context.ProjectModel.Any(p => p.Name == project.Name))
+                {
+                    _context.ProjectModel.Add(project);
+                }
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<RedirectToActionResult> GitGetAndUpdate()
+        {
+            GitSync gitSync = new GitSync();
+            var projects = await gitSync.GetProjects();
+
+            foreach (var project in projects)
+            {
+                var dbProject = _context.ProjectModel.Where(p => p.Name == project.Name).FirstOrDefault();
+                if (dbProject == null)
+                {
+                    _context.ProjectModel.Add(project);
+                }
+                else
+                {
+                    //BAD
+                    dbProject.LanguageTag = project.LanguageTag;
+                    dbProject.ImageLink = project.ImageLink;
+                    dbProject.Description = project.Description;
+                    dbProject.DescriptionShort = project.DescriptionShort;
+                    //BAD
+                }
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Project(int? id)
