@@ -20,10 +20,6 @@
     <None Include="wwwroot\assets\img\featured\blackjack-poker-cards-two-aces-260nw-281437508.png" />
     <None Include="wwwroot\assets\img\featured\hexadecimal.png" />
     <None Include="wwwroot\assets\img\featured\scraper.png" />
-    <None Include="wwwroot\assets\img\nature\image2.jpg" />
-    <None Include="wwwroot\assets\img\nature\image3.jpg" />
-    <None Include="wwwroot\assets\img\nature\image5.jpg" />
-    <None Include="wwwroot\assets\img\tech\image4.jpg" />
     <None Include="wwwroot\assets\js\bs-init.js" />
     <None Include="wwwroot\assets\js\jquery.min.js" />
     <None Include="wwwroot\assets\js\theme.js" />
@@ -42,6 +38,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\img\core\" />
   </ItemGroup>
 
 </Project>

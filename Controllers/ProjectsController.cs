@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Website.Core;
 using Website.Data;
 using Website.Models;
+using Website.Models.ViewModels;
 
 namespace Website.Controllers
 {
@@ -80,6 +81,7 @@ namespace Website.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
         public async Task<IActionResult> Project(int? id)
         {
             if (id == null)
@@ -88,13 +90,33 @@ namespace Website.Controllers
             }
 
             var projectModel = await _context.ProjectModel
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (projectModel == null)
             {
                 return NotFound();
             }
+            var viewModel = new ProjectViewModel(projectModel);
 
-            return View(projectModel);
+            var rand = new Random();
+            int maxValue = _context.ProjectModel.Count();
+            int randId = 0;
+            
+            for (int i = 0; i < 4; i++)
+            {
+                ProjectModel gotProject;
+                do
+                {
+                    randId = rand.Next(maxValue);
+                } while (id == randId || viewModel.OtherProjects.ContainsKey(randId));
+
+                gotProject = await _context.ProjectModel.SingleOrDefaultAsync(m => m.Id == randId);
+                if (gotProject != null)
+                    viewModel.OtherProjects.Add(randId, gotProject.ImageLink);
+                else
+                    i--;      //BAD          
+            }
+
+            return View(viewModel);
         }
 
         // GET: Projects/Details/5
@@ -106,7 +128,7 @@ namespace Website.Controllers
             }
 
             var projectModel = await _context.ProjectModel
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .SingleOrDefaultAsync(m => m.Id == id);
             if (projectModel == null)
             {
                 return NotFound();
