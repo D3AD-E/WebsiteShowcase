@@ -28,7 +28,7 @@
     <section class="portfolio-block project">
         <div class="container">
             <div class="heading">
-                <h2>@Html.DisplayFor(model => model.Name)</h2>
+                <h2>@Model.Name</h2>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6 offset-md-1 info">
@@ -36,7 +36,7 @@
                     <p>@Html.Raw(Model.Description)</p>
                 </div>
                 <div class="col-12 col-md-3 offset-md-1 meta">
-                    <div class="tags"><span class="meta-heading">Tags</span><a href="#">@Html.DisplayFor(model => model.LanguageTag)</a></div>
+                    <div class="tags"><span class="meta-heading">Tags</span><a asp-controller="Projects" asp-action="Filter" asp-route-language=@Model.LanguageTag>@Model.LanguageTag</a></div>
                 </div>
             </div><img src=@link style="width: 1114px;">
             <div class="more-projects">

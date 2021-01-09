@@ -1,10 +1,21 @@
 ﻿@model List<ProjectModel>
-
+@{ 
+    string languageTag = string.Empty;
+    if (Model != null && Model.Count > 0)
+    {
+        languageTag = "Filtered by "+ Model[0].LanguageTag;
+    }
+    else
+    {
+        languageTag = "Nothing found";
+    }
+}
 <main class="page projets-page">
     <section class="portfolio-block project-no-images">
         <div class="container">
+            <a class="btn btn-outline-primary btn-sm" href="javascript:history.go(-1)">Back</a>
             <div class="heading">
-                <h2>All &nbsp;projects</h2>
+                <h2>@languageTag</h2>
             </div>
             <div class="row">
                 @foreach (var project in Model)

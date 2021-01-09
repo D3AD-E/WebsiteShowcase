@@ -21,6 +21,7 @@ namespace Website.Controllers
             _context = context;
         }
 
+
         public async Task<IActionResult> All()
         {
             var projectModels = await _context.ProjectModel.ToListAsync();
@@ -31,6 +32,18 @@ namespace Website.Controllers
 
             return View(projectModels);
         }
+
+        public async Task<IActionResult> Filter([FromQuery]string language)
+        {
+            var projectModels = await _context.ProjectModel.Where(p => p.LanguageTag == language).ToListAsync();
+            if (projectModels == null)
+            {
+                return NotFound();
+            }
+
+            return View(projectModels);
+        }
+
         public IActionResult Featured() => View();
 
         // GET: Projects
@@ -62,7 +75,7 @@ namespace Website.Controllers
 
             foreach (var project in projects)
             {
-                var dbProject = _context.ProjectModel.Where(p => p.Name == project.Name).FirstOrDefault();
+                var dbProject = await _context.ProjectModel.SingleOrDefaultAsync(p => p.Name == project.Name);
                 if (dbProject == null)
                 {
                     _context.ProjectModel.Add(project);
@@ -127,8 +140,7 @@ namespace Website.Controllers
                 return NotFound();
             }
 
-            var projectModel = await _context.ProjectModel
-                .SingleOrDefaultAsync(m => m.Id == id);
+            var projectModel = await _context.ProjectModel.SingleOrDefaultAsync(m => m.Id == id);
             if (projectModel == null)
             {
                 return NotFound();
