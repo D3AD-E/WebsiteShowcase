@@ -54,7 +54,10 @@ namespace Website.Controllers
             TempData["UserMessage"] = new MessageViewModel() { CssClassName = "alert alert-danger", Title = "Error!", Message = "Something went wrong" };
             return View();
         }
-
+        public IActionResult Login()
+        {
+            return View();
+        }
         public IActionResult Cv()
         {
             return View();
