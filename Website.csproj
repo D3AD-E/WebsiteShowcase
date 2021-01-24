@@ -44,4 +44,11 @@
     <Folder Include="wwwroot\assets\img\core\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Views\Admin\Login.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>

@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Website.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Website.Data;
 
 namespace Website
 {
@@ -32,7 +26,7 @@ namespace Website
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddRouting(options => options.LowercaseUrls = true);
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false).AddRoles<IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -58,9 +52,12 @@ namespace Website
 
                 if (ctx.Response.StatusCode == 404 && !ctx.Response.HasStarted)
                 {
-                    string originalPath = ctx.Request.Path.Value;
-                    ctx.Items["originalPath"] = originalPath;
                     ctx.Request.Path = "/error/404";
+                    await next();
+                }
+                else if (ctx.Response.StatusCode == 403)
+                {
+                    ctx.Request.Path = "/error/403";
                     await next();
                 }
             });

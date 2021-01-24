@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Microsoft.AspNetCore.Identity.IdentityUser>
+
+<div class="mt-lg-5">
+
+</div>
+<h2>User list</h2>
+<div>
+    <a class="btn btn-sm btn-primary" asp-action="Create">Create user</a>
+</div>
+
+<table class="table mt-lg-5">
+    @foreach (var user in Model)
+    {
+    <tr>
+        <td>@user.Email</td>
+        <td>
+            <a class="btn btn-sm btn-primary" asp-controller= "Roles" asp-action="Edit" asp-route-userid="@user.Id">Access level</a>
+        </td>
+        <td>
+            <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-userid="@user.Id">Change password</a>
+        </td>
+        <td>
+            <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-userid="@user.Id">Delete</a>
+        </td>
+    </tr>
+    }
+</table>

@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -25,6 +28,15 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Projects" asp-action="Featured">Projects</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Cv">CV</a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="ContactMe">Contact me</a></li>
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="UserList">Manage</a></li>
+                        <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Logout">@User.Identity.Name</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item" role="presentation"><a class="nav-link" asp-area="" asp-controller="Admin" asp-action="Login">Login</a></li>
+                    }
                 </ul>
             </div>
         </div>
@@ -33,9 +45,10 @@
     <footer class="page-footer">
         <div class="container">
             <div class="social-icons">
-            <a href="https://www.facebook.com/YevheniiG"><i class="icon ion-social-facebook"></i></a>
-            <a href="https://www.instagram.com/evg.gordi/"><i class="icon ion-social-instagram-outline"></i></a>
-            <a href="https://github.com/D3AD-E"><i class="icon ion-social-github"></i></a></div>
+                <a href="https://www.facebook.com/YevheniiG"><i class="icon ion-social-facebook"></i></a>
+                <a href="https://www.instagram.com/evg.gordi/"><i class="icon ion-social-instagram-outline"></i></a>
+                <a href="https://github.com/D3AD-E"><i class="icon ion-social-github"></i></a>
+            </div>
         </div>
     </footer>
     <script src="/assets/js/jquery.min.js"></script>

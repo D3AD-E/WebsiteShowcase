@@ -1,10 +1,18 @@
-﻿<main class="page projects-page"></main>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+<main class="page projects-page"></main>
 <div class="projects-horizontal">
     <div class="container">
         <div class="intro" style="width: 531px;">
             <h2 class="text-center" style="width: 531px;">Featured projects </h2>
             <p class="text-center" style="width: 531px;">The following projects took me a lot of time and effort, so check them out!</p>
         </div>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a class="btn btn-outline-primary btn-sm" asp-controller="Projects" asp-action="Index">Manage projects</a>
+        }
+
         <div class="row projects">
             <div class="col-sm-6 item">
                 <div class="row">

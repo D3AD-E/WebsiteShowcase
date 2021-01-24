@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Website.Models;
 
 namespace Website.Controllers
 {
+    [Authorize(Roles ="admin")]
     public class RolesController : Controller
     {
         RoleManager<IdentityRole> _roleManager;
@@ -19,6 +20,7 @@ namespace Website.Controllers
         }
         public IActionResult Index() => View(_roleManager.Roles.ToList());
         public IActionResult Create() => View();
+
         [HttpPost]
         public async Task<IActionResult> Create(string name)
         {
@@ -51,8 +53,6 @@ namespace Website.Controllers
             return RedirectToAction("Index");
         }
 
-        public IActionResult UserList() => View(_userManager.Users.ToList());
-
         public async Task<IActionResult> Edit(string userId)
         {
             IdentityUser user = await _userManager.FindByIdAsync(userId);
@@ -67,7 +67,7 @@ namespace Website.Controllers
                     UserRoles = userRoles,
                     AllRoles = allRoles
                 };
-                return View(model);
+                return RedirectToAction("UserList", "Admin");
             }
 
             return NotFound();
@@ -87,7 +87,7 @@ namespace Website.Controllers
 
                 await _userManager.RemoveFromRolesAsync(user, removedRoles);
 
-                return RedirectToAction("UserList");
+                return RedirectToAction("UserList", "Admin");
             }
 
             return NotFound();

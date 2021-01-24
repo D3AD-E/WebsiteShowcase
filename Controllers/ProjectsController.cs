@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Website.Core;
 using Website.Data;
 using Website.Models;
@@ -46,12 +45,13 @@ namespace Website.Controllers
 
         public IActionResult Featured() => View();
 
-        // GET: Projects
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ProjectModel.ToListAsync());
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<RedirectToActionResult> GitGet()
         {
             GitSync gitSync = new GitSync();
@@ -68,6 +68,7 @@ namespace Website.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "admin")]
         public async Task<RedirectToActionResult> GitGetAndUpdate()
         {
             GitSync gitSync = new GitSync();
@@ -132,7 +133,7 @@ namespace Website.Controllers
             return View(viewModel);
         }
 
-        // GET: Projects/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -149,16 +150,14 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: Projects/Create
+        [Authorize(Roles = "admin")]
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Projects/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Name,DescriptionShort,Description,LanguageTag,ImageLink,GithubLink")] ProjectModel projectModel)
         {
@@ -171,7 +170,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: Projects/Edit/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -187,10 +186,8 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // POST: Projects/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize(Roles = "admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,DescriptionShort,Description,LanguageTag,ImageLink,GithubLink")] ProjectModel projectModel)
         {
@@ -222,7 +219,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // GET: Projects/Delete/5
+        [Authorize(Roles = "admin")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -240,7 +237,7 @@ namespace Website.Controllers
             return View(projectModel);
         }
 
-        // POST: Projects/Delete/5
+        [Authorize(Roles = "admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

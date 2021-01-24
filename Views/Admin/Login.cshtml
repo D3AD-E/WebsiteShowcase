@@ -1,4 +1,5 @@
-﻿
+﻿@model InputLoginModel
+
 <body class="bg-gradient-primary mt-lg-5">
     <div class="container w-50 p-3">
         <div class="row justify-content-center">
@@ -10,14 +11,18 @@
                                 <div class="text-center">
                                     <h4 class="text-dark mb-4"><strong>ADMIN PANEL</strong></h4>
                                 </div>
-                                <form class="user">
-                                    <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
-                                    <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
+                                <form class="user" asp-action="Login">
+                                    <div asp-validation-summary="All" class="text-danger"></div>
+                                    <div class="form-group"><input class="form-control form-control-user" asp-for="Email" aria-describedby="emailHelp" placeholder="Enter Email Address..."></div>
+                                    <div class="form-group"><input class="form-control form-control-user" asp-for="Password" placeholder="Password"></div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
-                                            <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
+                                            <div class="form-check">
+                                                <input class="form-check-input custom-control-input" asp-for="RememberMe">
+                                                <label class="form-check-label custom-control-label">Remember Me</label>
+                                            </div>
                                         </div>
-                                    </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
+                                    </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Log in</button>
                                     <hr>
                                 </form>
                                 <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
