@@ -7,6 +7,9 @@
 <div>
     <a class="btn btn-sm btn-primary" asp-action="Create">Create user</a>
 </div>
+<div>
+    <a class="btn btn-sm btn-primary" asp-controller= "Roles" asp-action="Index">Edit roles</a>
+</div>
 
 <table class="table mt-lg-5">
     @foreach (var user in Model)

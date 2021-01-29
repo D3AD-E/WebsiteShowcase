@@ -67,7 +67,7 @@ namespace Website.Controllers
                     UserRoles = userRoles,
                     AllRoles = allRoles
                 };
-                return RedirectToAction("UserList", "Admin");
+                return View(model);
             }
 
             return NotFound();

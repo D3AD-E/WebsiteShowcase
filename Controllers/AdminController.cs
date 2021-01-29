@@ -67,6 +67,23 @@ namespace Website.Controllers
         [Authorize]
         public IActionResult UserList() => View(_userManager.Users.ToList());
 
+        [HttpGet]
+        [Authorize(Roles ="admin")]
+        public async Task<IActionResult> ChangePasswordAsync(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"Unable to load user with ID '{userId}'.");
+            }
+
+            InputChangePasswordModel model = new InputChangePasswordModel
+            {
+                Email = user.Email
+            };
+
+            return View(model);
+        }
 
         [HttpGet]
         [Authorize]
@@ -161,21 +178,20 @@ namespace Website.Controllers
             return View();
         }
 
-        [HttpPost]
         [Authorize(Roles = "admin")]
-        public async Task<IActionResult> Delete(string id)
+        public async Task<IActionResult> Delete(string userId)
         {
-            var user = await _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(userId);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{id}'.");
+                return NotFound($"Unable to load user with ID '{userId}'.");
             }
 
             var result = await _userManager.DeleteAsync(user);
-            var userId = await _userManager.GetUserIdAsync(user);
+            var userIdGot = await _userManager.GetUserIdAsync(user);
             if (!result.Succeeded)
             {
-                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userId}'.");
+                throw new InvalidOperationException($"Unexpected error occurred deleting user with ID '{userIdGot}'.");
             }
             return Redirect(nameof(UserList));
         }
