@@ -7,6 +7,7 @@ Website that is my CV
 - Multiple user roles for better control
 - Hosted on Azure
 - SQL database
+- Fast contact with me via form
 - Easy sync with git projects
 
 ## Dependencies
