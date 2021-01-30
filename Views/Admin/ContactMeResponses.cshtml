@@ -1,0 +1,23 @@
+﻿@model List<ContactModel>
+
+<main class="page projets-page">
+    <section class="portfolio-block project-no-images">
+        <div class="container">
+            <div class="heading">
+                <h2>All mail</h2>
+            </div>
+            <div class="row">
+                @foreach (var message in Model)
+                {
+                    <div class="col-md-6 col-lg-4">
+                        <div class="project-card-no-image">
+                            <h3><strong>@message.Email<br></strong></h3>
+                            <h4>@message.Message<br></h4>
+                            <h4>@message.Name<br></h4>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </section>
+</main>

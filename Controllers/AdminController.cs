@@ -3,10 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Website.Data;
 using Website.Models;
 
 namespace Website.Controllers
@@ -15,12 +17,15 @@ namespace Website.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly ApplicationDbContext _context;
 
         public AdminController(SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -157,6 +162,18 @@ namespace Website.Controllers
         [Authorize(Roles = "admin")]
         public IActionResult Create()=> View();
 
+        [HttpGet]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> ContactMeResponses()
+        {
+            var contactModels = await _context.ContactModel.ToListAsync();
+            if (contactModels == null)
+            {
+                return NotFound();
+            }
+
+            return View(contactModels);
+        }
 
         [HttpPost]
         [Authorize(Roles = "admin")]
