@@ -1,6 +1,6 @@
 # WebsiteShowcase
 Website that is my CV
->.NET 5.1 MVC
+>.NET 5.0 MVC
 ## Features
 - Modern UI
 - Admin panel
